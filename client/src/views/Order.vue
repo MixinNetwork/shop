@@ -1,9 +1,9 @@
 <template>
   <div class="order-page">
-    <BackHeader name="支付" />
+    <BackHeader :name="$t('order.pay')" />
     <Info />
     <Form />
-    <button class="confirm" @click="clickPay">确认并支付</button>
+    <button class="confirm" @click="clickPay">{{$t('order.confirmPay')}}</button>
   </div>
 </template>
 
@@ -15,14 +15,6 @@ import { mapActions } from "vuex";
 export default {
   name: "Order",
   components: { BackHeader, Info, Form },
-  data() {
-    return {
-      colors: {
-        black: "黑色",
-        timer: null
-      }
-    };
-  },
   methods: {
     async clickPay() {
       this.$DC({ loading: true, opacity: 0.5 });
@@ -31,12 +23,12 @@ export default {
       if (data === "networkError")
         return this.$DC({ loading: false, opacity: 1 });
       if (data === "limited") {
-        this.$message("请勿重复购买");
+        this.$message(this.$t("order.repeat"));
         this.$DC({ loading: false, opacity: 1 });
         return this.MoveTo("/orderDetail");
       }
-      let memo = encodeURIComponent("购买 Mixin 限量T恤");
-      let url = `https://mixin.one/pay?recipient=${process.env.VUE_APP_CLIENT_ID}&asset=${process.env.VUE_APP_ASSET_ID}&amount=0.1&memo=${memo}&trace=${data}`;
+      let memo = encodeURIComponent(this.$t('order.buyMemo'));
+      let url = `https://mixin.one/pay?recipient=${process.env.VUE_APP_CLIENT_ID}&asset=${process.env.VUE_APP_ASSET_ID}&amount=${process.env.VUE_APP_AMOUNT}&memo=${memo}&trace=${data}`;
       window.location.href = url;
       this.timer = setInterval(async () => {
         let data = await this.checkPaid();

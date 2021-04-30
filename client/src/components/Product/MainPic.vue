@@ -1,13 +1,13 @@
 <template>
   <div :class="zoomMode && 'zoom-mode'">
     <div v-show="zoomMode" @click.stop="toggleZoomMode(false)" class="zoom" v-if="zoomMode">
-      <p>图片</p>
+      <p>{{$t('product.img')}}</p>
       <Carousel class="full-carousel" :isFull="true" :canZoom="true" />
     </div>
     <div v-show="!zoomMode" class="main-picture" @click="toggleZoomMode(null)">
       <Carousel />
       <img class="sticker-bg" src="@/assets/img/t-shit/sticker.svg" />
-      <i class="sticker">买 1 赠 1</i>
+      <i class="sticker">{{$t('product.sticker')}}</i>
       <ul class="dot-list">
         <li class="dot active"></li>
         <li class="dot"></li>

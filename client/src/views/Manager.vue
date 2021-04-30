@@ -1,21 +1,21 @@
 <template>
   <div class="manager">
     <header>
-      <span>订单</span>
+      <span>{{$t('manager.title')}}</span>
       <div class="search">
-        <input type="text" placeholder="搜索" v-model="keys" />
+        <input type="text" :placeholder="$t('manager.search')" v-model="keys" />
         <img src="@/assets/img/search.png" />
-        <i v-if="keys.length>0" @click="keys=''">取消</i>
+        <i v-if="keys.length>0" @click="keys=''">{{$t('manager.cancel')}}</i>
       </div>
     </header>
 
     <div class="btns">
       <button
-        v-for="(value,key,index) of statusL"
+        v-for="(item,index) in ['paid', 'shipping', 'compelete']"
         :key="index"
-        :class="key === status ? 'active' :''"
-        @click="clickStatus(key)"
-      >{{value}}</button>
+        :class="item === status ? 'active' :''"
+        @click="clickStatus(item)"
+      >{{$t('manager.' + item)}}</button>
     </div>
 
     <ul class="list">
@@ -24,22 +24,22 @@
           <p class="id">{{item.order_id}}</p>
           <template v-if="item.status==='paid'">
             <div class="actions">
-              <button @click="clickEdit(item)">编辑</button>
-              <button @click="clickShipping(item)">发货</button>
-              <button @click="clickSendMessage(item)">发消息</button>
+              <button @click="clickEdit(item)">{{$t('manager.edit')}}</button>
+              <button @click="clickShipping(item)">{{$t('manager.dispatch')}}</button>
+              <button @click="clickSendMessage(item)">{{$t('manager.message')}}</button>
             </div>
           </template>
           <template v-else-if="item.status==='shipping'">
             <div class="actions">
-              <button @click="clickShipping(item)">修改货号</button>
-              <button @click="clickComplete(item.order_id)">已完成</button>
+              <button @click="clickShipping(item)">{{$t('manager.editnum')}}</button>
+              <button @click="clickComplete(item.order_id)">{{$t('manager.finished')}}</button>
             </div>
           </template>
         </div>
         <div class="middle">
-          <p>{{`${item.size};${colors[item.color]};${item.style} ${item.tracking ? ('物流：' + item.tracking) : ''}`}}</p>
+          <p>{{`${item.size};${$t('product.colors.'+item.color)};${item.style} ${item.tracking ? ( $t('manager.logistics') + '：' + item.tracking) : ''}`}}</p>
           <p>{{item.created_at}};{{item.identity_number}}</p>
-          <p>备注：{{item.notes}}</p>
+          <p>{{$t('manager.memo')}}：{{item.notes}}</p>
         </div>
         <p
           class="foot"
@@ -53,8 +53,8 @@
     <Modal v-if="modal" :show="modal" :click_modal_close="true" @close="closeModal">
       <div :class="['modal-content', modalMode ? 'edit' : '']">
         <template v-if="modalMode==='shipping'">
-          <input type="text" placeholder="请输入物流编号" v-model="tracking" />
-          <button @click="clickConfirmTracking">确认</button>
+          <input type="text" :placeholder="$t('manager.editLogistics')" v-model="tracking" />
+          <button @click="clickConfirmTracking">{{$t('manager.confirm')}}</button>
         </template>
         <template v-else-if="modalMode==='edit'">
           <ul class="colors">
@@ -63,7 +63,7 @@
               :key="index"
               :class="item === color ? 'active' : ''"
               @click="clickOptions('color',item)"
-            >{{colors[item]}}</li>
+            >{{$t('product.colors.'+item)}}</li>
           </ul>
           <ul class="sizes">
             <li
@@ -82,11 +82,11 @@
             >{{item}}</li>
           </ul>
           <input class="notes" type="text" v-model="notes" />
-          <button @click="clickConfirmOptions">确认</button>
+          <button @click="clickConfirmOptions">{{$t('manager.confirm')}}</button>
         </template>
         <template v-else-if="modalMode==='sendMessage'">
-          <input type="text" placeholder="请输入要发送的信息" v-model="message" />
-          <button @click="clickConfirmSend">确认</button>
+          <input type="text" :placeholder="$t('manager.confirmMsg')" v-model="message" />
+          <button @click="clickConfirmSend">{{$t('manager.confirm')}}</button>
         </template>
       </div>
     </Modal>
@@ -116,16 +116,11 @@ export default {
       notes: "",
 
       identity_number: "",
-      message: "",
-      statusL: {
-        paid: "待发货",
-        shipping: "待收货",
-        compelete: "已完成"
-      }
+      message: ""
     };
   },
   computed: {
-    ...mapState("product", ["options", "colors"])
+    ...mapState("product", ["options"])
   },
   watch: {
     async keys(val) {
@@ -181,7 +176,7 @@ export default {
       message = encodeURIComponent(message);
       let params = { identity_number, message };
       let status = await this.APIS.sendMessage(params);
-      let msg = status ? "发送成功" : "发送失败";
+      let msg = status ? this.$t('manager.sendSuccess') : this.$t('manager.sendFaild');
       this.$message(msg);
       this.modalMode = "";
       this.modal = false;
@@ -197,7 +192,7 @@ export default {
       return `${item.name} ${item.phone} ${item.region} ${item.address}`;
     },
     click_copy_succuess() {
-      this.$message("复制成功");
+      this.$message(this.$t('success.copy'));
     },
     click_copy_error() {}
   },
@@ -215,7 +210,7 @@ async function updateOrder(order_id, status, tracking) {
   await refreshPage.call(this, _status);
 }
 async function refreshPage(status) {
-  let message = status ? "操作成功" : "操作失败";
+  let message = status ? this.$t('manager.success') : this.$t('manager.faild');
   await updateOrderList.call(this);
   this.$message(message);
   this.modal = false;

@@ -1,7 +1,7 @@
 <template>
   <div class="selection">
     <div class="color">
-      <p>颜色</p>
+      <p>{{$t('product.color')}}</p>
       <div class="color-list">
         <img
           v-for="(item, index) in options.colors"
@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="size">
-      <p>尺码</p>
+      <p>{{$t('product.size')}}</p>
       <ul class="size-list">
         <li
           v-for="(item, index) in options.sizes"
@@ -24,7 +24,7 @@
       </ul>
     </div>
     <div class="style">
-      <p>款式</p>
+      <p>{{$t('product.style')}}</p>
       <ul class="size-list">
         <li
           v-for="(item, index) in options.style"

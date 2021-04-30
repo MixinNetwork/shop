@@ -1,25 +1,25 @@
 <template>
   <div class="form">
     <div class="notes">
-      <p>备注</p>
+      <p>{{$t('order.memo')}}</p>
       <input
         type="text"
         @input="setInput($event,'notes')"
         :value="notes"
-        placeholder="输入您想要的赠品颜色、尺码、款式等"
+        :placeholder="$t('order.memoPlaceholder')"
       />
     </div>
     <div class="address">
-      <p>收货地址</p>
-      <input type="text" @input="setInput($event,'name')" :value="name" placeholder="收货人" />
-      <input type="number" @input="setInput($event,'phone')" :value="phone" placeholder="手机号" />
+      <p>{{$t('order.address')}}</p>
+      <input type="text" @input="setInput($event,'name')" :value="name" :placeholder="$t('order.name')" />
+      <input type="number" @input="setInput($event,'phone')" :value="phone" :placeholder="$t('order.phone')" />
       <div
         class="area"
         @click="toggleCityStatus(true)"
-      >{{region.province ? `${region.province+ ' ' +region.city+ ' ' +region.area}` : '所在地区'}}</div>
+      >{{region.province ? `${region.province+ ' ' +region.city+ ' ' +region.area}` : $t('order.area')}}</div>
       <textarea
         @input="setInput($event,'address')"
-        placeholder="详细地址：如道路、门牌号、小区、楼栋号、单元室等"
+        :placeholder="$t('order.areaPlaceholder')"
         :value="address"
       ></textarea>
     </div>

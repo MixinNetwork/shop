@@ -1,6 +1,6 @@
 <template>
   <div class="detail-page">
-    <BackHeader :back="hasBack" name="订单详情" />
+    <BackHeader :back="hasBack" :name="$t('order.detail')" />
 
     <Info :finished="true" />
 

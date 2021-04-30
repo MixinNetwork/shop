@@ -1,13 +1,16 @@
 <template>
-  <Modal class="modal" :show="noticeModal">
+  <Modal
+    class="modal"
+    :show="noticeModal"
+  >
     <ul>
-      <li>限量商品，每个 Mixin ID 限购一次，请在备注填写赠品颜色、号码</li>
-      <li>非质量问题不退不换</li>
-      <li>如需客服支持，请直接给机器人留言</li>
-      <li>本活动最终解释权归 Mixin 团队</li>
+      <li
+        v-for="(item, idx) in $t('product.ps')"
+        :key="idx"
+      >{{item}}</li>
     </ul>
-    <button @click="moveToOrder">同意并继续</button>
-    <button @click="closeModal">再想想</button>
+    <button @click="moveToOrder">{{$t('product.confirm')}}</button>
+    <button @click="closeModal">{{$t('product.cancel')}}</button>
   </Modal>
 </template>
 
@@ -18,7 +21,7 @@ export default {
   name: "NoticeModal",
   components: { Modal },
   computed: {
-    ...mapState("product", ["noticeModal"])
+    ...mapState("product", ["noticeModal"]),
   },
   methods: {
     moveToOrder() {
@@ -27,8 +30,8 @@ export default {
     },
     closeModal() {
       this.$DC("product", { noticeModal: false });
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -1,6 +1,6 @@
 const DB = require('../db')
 const api = require('../api')
-const { ASSET_ID, AMOUNT, ADMIN, INVENTORY, LOCATION, ORDER_INFO } = require('../tools/const')
+const { ASSET_ID, AMOUNT, ADMIN, INVENTORY, ORDER_INFO } = require('../tools/const')
 const tools = require('../tools')
 
 class Model extends DB {

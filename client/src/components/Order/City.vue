@@ -2,11 +2,11 @@
   <div class="city" v-if="status">
     <BottomModal :close="close_modal" @close="$emit('close', false)" :show="status">
       <div class="country-main">
-        <p class="header">请选择</p>
+        <p class="header">{{$t('product.select')}}</p>
         <i class="close" @click="close"></i>
 
         <template v-if="!region.province">
-          <div class="title">热门城市</div>
+          <div class="title">{{$t('product.city.hot')}}</div>
           <ul class="hot-city">
             <li
               v-for="(item, index) in Object.keys(hostCity)"
@@ -30,11 +30,11 @@
               :key="index"
               :class="!key && 'no'"
               @click="clickProcess(key,index)"
-            >{{key || '请' + title[index]}}</p>
+            >{{key || $t('product.city.select')[index]}}</p>
           </div>
         </template>
 
-        <div class="title">{{title[activeIdx]}}</div>
+        <div class="title">{{$t('product.city.select')[activeIdx]}}</div>
         <ul class="province">
           <li v-for="(item, index) in currentSelect" :key="index" @click="setRegion(item)">{{item}}</li>
         </ul>
@@ -61,7 +61,6 @@ export default {
       city: city.city,
       hostCity: city.hostCity,
       close_modal: 0,
-      title: ["选择省份", "选择城市", "选择地区"],
       activeIdx: 0
     };
   },

@@ -1,11 +1,11 @@
 <template>
   <div class="form">
     <div class="notes">
-      <p>备注</p>
+      <p>{{$t('order.memo')}}</p>
       <div class="content">{{notes}}</div>
     </div>
     <div class="address">
-      <p>收货地址</p>
+      <p>{{$t('order.address')}}</p>
       <div class="content">
         {{`${name} ${phone}`}}
         <br />
@@ -13,32 +13,32 @@
       </div>
     </div>
     <div class="order">
-      <p>订单信息</p>
+      <p>{{$t('order.info')}}</p>
       <div class="content">
         <span class="copy">
-          {{'订单编号：' + orderInfo.order_id}}
+          {{$t('order.num') + orderInfo.order_id}}
           <i
             v-clipboard:copy="orderInfo.order_id"
             　　v-clipboard:success="click_copy_succuess"
             　　v-clipboard:error="click_copy_error"
           >复制</i>
         </span>
-        {{'订单状态：' + $t('product.button.' + orderInfo.status)}}
+        {{$t('order.status') + $t('product.button.' + orderInfo.status)}}
         <br />
         <span class="copy">
-          {{'物流编号：' + (orderInfo.tracking || '暂无')}}
+          {{$t('order.logisticsNum') + (orderInfo.tracking || $t('order.none'))}}
           <i
             v-if="orderInfo.tracking"
             v-clipboard:copy="orderInfo.tracking"
             　　v-clipboard:success="click_copy_succuess"
             　　v-clipboard:error="click_copy_error"
-          >复制</i>
+          >{{$t('order.copy')}}</i>
         </span>
-        {{'创建时间：' + orderInfo.created_at}}
+        {{$t('order.createdAt') + orderInfo.created_at}}
       </div>
     </div>
     <ul class="ps">
-      <li>物流默认顺丰，运输状态请复制物流编号后自行查询。</li>
+      <li>{{$t('order.ps')}}</li>
     </ul>
   </div>
 </template>
@@ -49,7 +49,7 @@ export default {
   name: "OrderForm",
   data() {
     return {
-      selectCityStatus: false
+      selectCityStatus: false,
     };
   },
   computed: {
@@ -59,8 +59,8 @@ export default {
       "phone",
       "region",
       "address",
-      "orderInfo"
-    ])
+      "orderInfo",
+    ]),
   },
   methods: {
     setInput(e, key) {
@@ -71,11 +71,11 @@ export default {
       this.selectCityStatus = status;
     },
     click_copy_succuess(e) {
-      this.$message("复制成功");
+      this.$message(this.$t('success.copy'));
     },
     click_copy_error(e) {},
-    ...mapActions("order", ["mock"])
-  }
+    ...mapActions("order", ["mock"]),
+  },
 };
 </script>
 

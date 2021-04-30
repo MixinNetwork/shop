@@ -3,7 +3,7 @@
     <div class="content">
       <header>
         <img :src="user_info.avatar_url" @click="clickAvatar" alt />
-        <span>Mixin T 恤</span>
+        <span>{{$t('product.shopName')}}</span>
       </header>
 
       <section>

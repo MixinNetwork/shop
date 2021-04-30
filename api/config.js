@@ -1,5 +1,4 @@
-const axios = require('axios').default
-const tools = require('../tools')
+const axios = require('axios')
 const { CLIENT_CONFIG } = require('../config')
 const { Mixin } = require('mixin-node-sdk')
 
@@ -10,7 +9,7 @@ const _mixinRequest = axios.create({
   baseURL: 'https://mixin-api.zeromesh.net',
 })
 
-function backOff() {
+function delay() {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve()
@@ -23,7 +22,7 @@ _mixinRequest.interceptors.response.use(res => {
   if (typeof data === 'string') data = JSON.parse(data)
   return data.data || data.error
 }, async e => {
-  await backOff()
+  await delay()
   return await _mixinRequest(e.config)
 })
 

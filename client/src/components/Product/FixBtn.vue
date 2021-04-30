@@ -1,7 +1,10 @@
 <template>
   <div class="fixed-button">
-    <span>0.1 XIN</span>
-    <button :class="['confirm', btnColor]" @click="clickMainBtn">{{$t('product.button.' + status)}}</button>
+    <span>{{product.price}} {{product.symbol}}</span>
+    <button
+      :class="['confirm', btnColor]"
+      @click="clickMainBtn"
+    >{{$t('product.button.' + status)}}</button>
   </div>
 </template>
 
@@ -20,14 +23,14 @@ export default {
         default:
           return "process";
       }
-    }
+    },
   },
   methods: {
     clickMainBtn() {
       if (this.status === "ok") this.$DC("product", { noticeModal: true });
       else this.MoveTo("/orderDetail");
-    }
-  }
+    },
+  },
 };
 </script>
 
