@@ -1,0 +1,57 @@
+@import '../font/index.css';
+
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-overflow-scrolling: touch;
+  font-family: 'San Francisco', 'PingFang SC', 'Heiti SC', 'Droid Sans Fallback', 'Nunito';
+}
+
+ul,
+ol,
+li {
+  list-style: none;
+}
+
+input,
+textarea {
+  border: 0;
+  outline: none;
+}
+
+img {
+  border-style: none;
+  border: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+button {
+  border: 0;
+  background-color: none;
+  outline: none;
+}
+
+button {
+  display: block;
+  border-radius: 25px;
+  color: #ffffff;
+  font-size: 1.12rem;
+  width: 209px;
+  height: 50px;
+  box-sizing: border-box;
+  background: #EE8336;
+  margin: 0 auto;
+}
